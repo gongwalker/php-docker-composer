@@ -1,0 +1,15 @@
+version: '2'
+services:
+    mysql:
+        network_mode: "bridge"
+        environment:
+            MYSQL_ROOT_PASSWORD: "123456"
+        image: "mysql:5.6"
+        restart: always
+        volumes:
+            - "./mysql5.6/data:/var/lib/mysql"
+            - "./mysql5.6/conf/my.cnf:/etc/mysql/conf.d/my.cnf"
+            - "./mysql5.6/logs:/logs"
+            - "./mysql5.6/init:/docker-entrypoint-initdb.d"
+        ports:
+            - "13306:3306"

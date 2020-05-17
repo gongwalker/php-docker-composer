@@ -5,7 +5,7 @@ services:
         network_mode: "bridge"
         environment:
             MYSQL_ROOT_PASSWORD: "123456"
-            TZ=Asia/Shanghai 
+            TZ: "Asia/Shanghai" 
         image: "mysql:5.6"
         restart: always
         volumes:
@@ -20,7 +20,7 @@ services:
         network_mode: "bridge"
         environment:
             MYSQL_ROOT_PASSWORD: "123456"
-            TZ=Asia/Shanghai 
+            TZ: "Asia/Shanghai" 
         image: "mysql:5.7"
         restart: always
         volumes:

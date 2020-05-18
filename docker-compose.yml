@@ -6,7 +6,7 @@ services:
         image: "nginx"
         restart: always
         volumes:
-            - "./nginx/data:/nginx/data"
+            - "./wwwroot:/nginx/data"
             - "./nginx/log:/nginx/log"
             - "./nginx/conf.d:/nginx/conf.d"
             - "./nginx/nginx.conf:/etc/nginx/nginx.conf"

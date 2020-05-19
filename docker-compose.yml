@@ -7,6 +7,7 @@ services:
         image: "nginx"
         links:
             - "php7.4.4"
+            - "php5.6"
         restart: always
         volumes:
             - "./wwwroot:/nginx/data"
@@ -26,7 +27,19 @@ services:
             - "mysql57"
         restart: always
         volumes:
-            - "./wwwroot:/nginx/data"  
+            - "./wwwroot:/nginx/data"
+
+    # php5.6
+    php5.6:
+        container_name: "php5.6"
+        network_mode: "bridge"
+        image: "gongwen/php:php5.6"
+        links:
+            - "mysql56"
+            - "mysql57"
+        restart: always
+        volumes:
+            - "./wwwroot:/nginx/data"         
 
     # mysql5.6
     mysql56:

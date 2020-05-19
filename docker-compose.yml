@@ -21,12 +21,14 @@ services:
     php7.4.4:
         container_name: "php7.4.4"
         network_mode: "bridge"
-        image: "gongwen/php:7.4.4"
+        image: "gongwen/php:dev"
         links:
             - "mysql56"
             - "mysql57"
         restart: "always"
         volumes:
+            - "./php7.4.4/php.ini:/usr/local/etc/php/php.ini"
+            - "./php7.4.4/conf.d:/usr/local/etc/php/conf.d"
             - "./wwwroot:/nginx/data"
 
     # php5.6

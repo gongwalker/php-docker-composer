@@ -8,7 +8,7 @@ services:
         links:
             - "php7.4.4"
             - "php5.6"
-        restart: always
+        restart: "always"
         volumes:
             - "./wwwroot:/nginx/data"
             - "./nginx/log:/nginx/log"
@@ -25,7 +25,7 @@ services:
         links:
             - "mysql56"
             - "mysql57"
-        restart: always
+        restart: "always"
         volumes:
             - "./wwwroot:/nginx/data"
 
@@ -37,9 +37,11 @@ services:
         links:
             - "mysql56"
             - "mysql57"
-        restart: always
+        restart: "always"
         volumes:
-            - "./wwwroot:/nginx/data"         
+            - "./php5.6/php.ini:/usr/local/etc/php/php.ini"
+            - "./php5.6/conf.d:/usr/local/etc/php/conf.d"
+            - "./wwwroot:/nginx/data"
 
     # mysql5.6
     mysql56:
@@ -49,7 +51,7 @@ services:
             MYSQL_ROOT_PASSWORD: "123456"
             TZ: "Asia/Shanghai" 
         image: "mysql:5.6"
-        restart: always
+        restart: "always"
         volumes:
             - "./mysql5.6/data:/var/lib/mysql"
             - "./mysql5.6/conf/my.cnf:/etc/mysql/conf.d/my.cnf"
@@ -66,7 +68,7 @@ services:
             MYSQL_ROOT_PASSWORD: "123456"
             TZ: "Asia/Shanghai" 
         image: "mysql:5.7"
-        restart: always
+        restart: "always"
         volumes:
             - "./mysql5.7/data:/var/lib/mysql"
             - "./mysql5.7/conf/my.cnf:/etc/mysql/conf.d/my.cnf"

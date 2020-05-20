@@ -1,27 +1,29 @@
-version: '2'
+version: '3'
 services:
     # nginx
     nginx:
         container_name: "nginx"
-        network_mode: "bridge"
-        image: "nginx"
+        image: "${NGINX}"
         links:
-            - "php7.4.4"
+            - "php7.4"
             - "php5.6"
         restart: "always"
         volumes:
-            - "./wwwroot:/nginx/data"
+            - "${WWWROOT}:/nginx/data"
             - "./nginx/log:/nginx/log"
             - "./nginx/conf.d:/nginx/conf.d"
             - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
         ports:
-            - "8080:80"
-            
+            - "${PORT80}"
+            - "${PORT443}"
+        networks:
+            default:
+                ipv4_address: 172.0.0.10
+        
     # php7.4.4
-    php7.4.4:
+    php7.4:
         container_name: "php7.4.4"
-        network_mode: "bridge"
-        image: "gongwen/php:dev"
+        image: "${PHP74}"
         links:
             - "mysql56"
             - "mysql57"
@@ -29,13 +31,14 @@ services:
         volumes:
             - "./php7.4.4/php.ini:/usr/local/etc/php/php.ini"
             - "./php7.4.4/conf.d:/usr/local/etc/php/conf.d"
-            - "./wwwroot:/nginx/data"
+            - "${WWWROOT}:/nginx/data"
+        extra_hosts:
+            - "demo.com:172.0.0.10"    
 
     # php5.6
     php5.6:
         container_name: "php5.6"
-        network_mode: "bridge"
-        image: "gongwen/php:php5.6"
+        image: "${PHP56}"
         links:
             - "mysql56"
             - "mysql57"
@@ -43,16 +46,17 @@ services:
         volumes:
             - "./php5.6/php.ini:/usr/local/etc/php/php.ini"
             - "./php5.6/conf.d:/usr/local/etc/php/conf.d"
-            - "./wwwroot:/nginx/data"
+            - "${WWWROOT}:/nginx/data"
+        extra_hosts:
+            - "demo.com:172.0.0.10"
 
     # mysql5.6
     mysql56:
         container_name: "mysql56"
-        network_mode: "bridge"
         environment:
-            MYSQL_ROOT_PASSWORD: "123456"
-            TZ: "Asia/Shanghai" 
-        image: "mysql:5.6"
+            MYSQL_ROOT_PASSWORD: "${MYSQL5_6_ROOT_PASSWORD}"
+            TZ: "${TZ}"
+        image: "${MYSQL56}"
         restart: "always"
         volumes:
             - "./mysql5.6/data:/var/lib/mysql"
@@ -60,16 +64,15 @@ services:
             - "./mysql5.6/logs:/logs"
             - "./mysql5.6/init:/docker-entrypoint-initdb.d"
         ports:
-            - "13356:3306"
+            - "${MYSQL5_6_PORT3306}"
 
     # mysql5.7        
     mysql57:
         container_name: "mysql57"
-        network_mode: "bridge"
         environment:
-            MYSQL_ROOT_PASSWORD: "123456"
-            TZ: "Asia/Shanghai" 
-        image: "mysql:5.7"
+            MYSQL_ROOT_PASSWORD: "${MYSQL5_7_ROOT_PASSWORD}"
+            TZ: "${TZ}" 
+        image: "${MYSQL57}"
         restart: "always"
         volumes:
             - "./mysql5.7/data:/var/lib/mysql"
@@ -77,4 +80,10 @@ services:
             - "./mysql5.7/logs:/logs"
             - "./mysql5.7/init:/docker-entrypoint-initdb.d"
         ports:
-            - "13357:3306"
+            - "${MYSQL5_6_PORT3306}"
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.0.0.0/24            

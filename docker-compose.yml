@@ -38,8 +38,7 @@ services:
             - "./php7.4.4/php.ini:/usr/local/etc/php/php.ini"
             - "./php7.4.4/conf.d:/usr/local/etc/php/conf.d"
             - "${WWWROOT}:/nginx/data"
-        extra_hosts: 
-            extra_hosts: *hosts 
+        extra_hosts: *hosts 
 
     # php5.6
     php5.6:

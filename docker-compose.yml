@@ -80,7 +80,7 @@ services:
             - "./mysql5.7/logs:/logs"
             - "./mysql5.7/init:/docker-entrypoint-initdb.d"
         ports:
-            - "${MYSQL5_6_PORT3306}"
+            - "${MYSQL5_7_PORT3306}"
 
 networks:
   default:

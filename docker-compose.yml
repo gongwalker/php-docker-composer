@@ -1,4 +1,10 @@
-version: '3'
+version: '3.4'
+
+x-env:
+    &hosts
+        - test.com:172.0.0.10
+        - www.test.com:127.0.0.10
+
 services:
     # nginx
     nginx:
@@ -32,8 +38,8 @@ services:
             - "./php7.4.4/php.ini:/usr/local/etc/php/php.ini"
             - "./php7.4.4/conf.d:/usr/local/etc/php/conf.d"
             - "${WWWROOT}:/nginx/data"
-        extra_hosts:
-            - "demo.com:172.0.0.10"    
+        extra_hosts: 
+            extra_hosts: *hosts 
 
     # php5.6
     php5.6:
@@ -47,8 +53,7 @@ services:
             - "./php5.6/php.ini:/usr/local/etc/php/php.ini"
             - "./php5.6/conf.d:/usr/local/etc/php/conf.d"
             - "${WWWROOT}:/nginx/data"
-        extra_hosts:
-            - "demo.com:172.0.0.10"
+        extra_hosts: *hosts    
 
     # mysql5.6
     mysql56:
@@ -66,7 +71,7 @@ services:
         ports:
             - "${MYSQL5_6_PORT3306}"
 
-    # mysql5.7        
+    # mysql5.7
     mysql57:
         container_name: "mysql57"
         environment:
